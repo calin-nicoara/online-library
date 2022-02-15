@@ -2,6 +2,7 @@ package com.example.onlinelibrary.login;
 
 import com.example.onlinelibrary.customers.Customer;
 import com.example.onlinelibrary.customers.CustomerRepository;
+import com.example.onlinelibrary.exceptions.AuthenticationException;
 
 import org.springframework.stereotype.Service;
 
@@ -19,10 +20,10 @@ public class LoginService {
 
     public String createAndGetToken(final LoginDTO loginDTO) {
         Customer customer = customerRepository.findByUsername(loginDTO.getUsername())
-                .orElseThrow(() -> new IllegalArgumentException("Username or password not correct!"));
+                .orElseThrow(() -> new AuthenticationException("Username or password not correct!"));
 
         if(!verifyPassword(customer.getPassword(), loginDTO.getPassword())) {
-            throw new IllegalArgumentException("Username or password not correct!");
+            throw new AuthenticationException("Username or password not correct!");
         }
 
         // Would use JWT in production
@@ -45,4 +46,9 @@ public class LoginService {
     }
 
 
+    public void validateToken(final String customAuthToken) {
+        if(!customerTokenRepository.existsByToken(customAuthToken)) {
+            throw new AuthenticationException("Authentication token not valid!");
+        }
+    }
 }

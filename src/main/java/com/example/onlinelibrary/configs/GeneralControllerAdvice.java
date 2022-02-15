@@ -1,5 +1,6 @@
 package com.example.onlinelibrary.configs;
 
+import com.example.onlinelibrary.exceptions.AuthenticationException;
 import com.example.onlinelibrary.exceptions.NotFoundException;
 
 import org.springframework.http.ResponseEntity;
@@ -21,5 +22,10 @@ public class GeneralControllerAdvice {
     @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<String> handleEntityNotFound() {
         return ResponseEntity.notFound().build();
+    }
+
+    @ExceptionHandler(AuthenticationException.class)
+    public ResponseEntity<String> handleAuthenticationException(AuthenticationException authenticationException) {
+        return ResponseEntity.badRequest().body(authenticationException.getMessage());
     }
 }
