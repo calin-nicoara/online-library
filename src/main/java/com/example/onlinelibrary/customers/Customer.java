@@ -5,7 +5,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
-import javax.validation.constraints.NotBlank;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,14 +25,8 @@ public class Customer {
     @SequenceGenerator(name="CUST_SEQ_GEN", sequenceName = "CUST_SEQ", allocationSize = 1)
     private Long id;
 
-    @NotBlank
     private String name;
-
-    @NotBlank
     private String username;
-
-    @NotBlank
     private String email;
-
     private String password;
 }
