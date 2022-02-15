@@ -9,14 +9,7 @@ public final class CustomerMapper {
                 .id(customer.getId())
                 .name(customer.getName())
                 .email(customer.getEmail())
-                .build();
-    }
-
-    public static Customer toCustomer(final CustomerDTO customerDTO) {
-        return Customer.builder()
-                .id(customerDTO.getId())
-                .name(customerDTO.getName())
-                .email(customerDTO.getEmail())
+                .username(customer.getUsername())
                 .build();
     }
 
@@ -24,7 +17,15 @@ public final class CustomerMapper {
         return Customer.builder()
                 .name(customerDTO.getName())
                 .email(customerDTO.getEmail())
+                .username(customerDTO.getUsername())
                 .password(hashedPassword)
                 .build();
+    }
+
+    public static Customer toUpdateCustomer(final CustomerDTO customerDTO, final Customer customerById) {
+        customerById.setEmail(customerDTO.getEmail());
+        customerById.setName(customerDTO.getName());
+
+        return customerById;
     }
 }

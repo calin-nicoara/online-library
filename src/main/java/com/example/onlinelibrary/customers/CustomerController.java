@@ -23,7 +23,6 @@ public class CustomerController {
 
     private final CustomerService customerService;
 
-    // TODO Get customers
     @GetMapping
     public ResponseEntity<List<CustomerDTO>> findCustomers() {
         return ResponseEntity.ok(customerService.findCustomers());

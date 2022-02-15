@@ -40,11 +40,9 @@ public class CustomerService {
     }
 
     public CustomerDTO updateCustomer(final CustomerDTO customerDTO) {
-        if(!customerRepository.existsById(customerDTO.getId())) {
-            throw new NotFoundException("Customer not found with id: " + customerDTO.getId());
-        }
+        Customer customerById = customerRepository.findById(customerDTO.getId()).orElseThrow(() -> new NotFoundException("Customer not found with id: " + customerDTO.getId()));
 
-        Customer customer = CustomerMapper.toCustomer(customerDTO);
+        Customer customer = CustomerMapper.toUpdateCustomer(customerDTO, customerById);
         Customer savedCustomer = customerRepository.save(customer);
 
         return CustomerMapper.toCustomerDto(savedCustomer);
